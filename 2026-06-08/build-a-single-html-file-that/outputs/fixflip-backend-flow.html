@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="FixFlip backend request-response architecture flow">
+  <title>FixFlip ASP.NET Web API - Request-Response Flow</title>
+  <style>
+    :root {
+      --navy: #0b1736;
+      --navy-2: #111f45;
+      --panel: rgba(18, 34, 72, 0.74);
+      --line: rgba(151, 171, 216, 0.22);
+      --text: #f5f7ff;
+      --muted: #aebbd9;
+      --request: #55d6be;
+      --request-soft: rgba(85, 214, 190, 0.12);
+      --response: #a78bfa;
+      --response-soft: rgba(167, 139, 250, 0.13);
+      --database: #ffbd59;
+      --database-soft: rgba(255, 189, 89, 0.13);
+      --arrow: #6680b8;
+      --radius: 18px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      min-height: 100%;
+      margin: 0;
+    }
+
+    body {
+      display: grid;
+      place-items: center;
+      padding: 32px;
+      overflow-x: hidden;
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 12% 14%, rgba(85, 214, 190, 0.13), transparent 28%),
+        radial-gradient(circle at 88% 82%, rgba(167, 139, 250, 0.14), transparent 30%),
+        linear-gradient(145deg, #071127 0%, var(--navy) 54%, #0e1937 100%);
+    }
+
+    body::before {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      content: "";
+      opacity: 0.24;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: linear-gradient(to bottom, black, transparent 84%);
+    }
+
+    .presentation {
+      position: relative;
+      width: min(1700px, 100%);
+      padding: clamp(28px, 4vw, 54px);
+      border: 1px solid rgba(178, 195, 233, 0.16);
+      border-radius: 30px;
+      background: linear-gradient(145deg, rgba(17, 31, 69, 0.88), rgba(9, 20, 47, 0.82));
+      box-shadow: 0 30px 90px rgba(0, 0, 0, 0.35);
+      backdrop-filter: blur(14px);
+    }
+
+    .presentation::after {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      content: "";
+      border-radius: inherit;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
+    }
+
+    header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 28px;
+      margin-bottom: 38px;
+    }
+
+    .eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin: 0 0 10px;
+      color: var(--request);
+      font-size: 0.75rem;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      width: 26px;
+      height: 2px;
+      content: "";
+      border-radius: 2px;
+      background: currentColor;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.9rem, 3.6vw, 3.2rem);
+      line-height: 1.02;
+      letter-spacing: -0.045em;
+    }
+
+    .subtitle {
+      max-width: 660px;
+      margin: 14px 0 0;
+      color: var(--muted);
+      font-size: clamp(0.95rem, 1.5vw, 1.08rem);
+      line-height: 1.6;
+    }
+
+    .brand {
+      display: grid;
+      flex: 0 0 auto;
+      width: 82px;
+      height: 82px;
+      place-items: center;
+      border: 1px solid rgba(85, 214, 190, 0.32);
+      border-radius: 24px;
+      color: var(--request);
+      font-size: 1.5rem;
+      font-weight: 900;
+      letter-spacing: -0.06em;
+      background: linear-gradient(145deg, rgba(85, 214, 190, 0.13), rgba(85, 214, 190, 0.03));
+      box-shadow: 0 14px 34px rgba(0, 0, 0, 0.2);
+    }
+
+    .flow-shell {
+      position: relative;
+      padding: 29px;
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      background: rgba(5, 14, 36, 0.42);
+    }
+
+    .path-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.7rem;
+      font-weight: 800;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+
+    .path-label::before {
+      width: 7px;
+      height: 7px;
+      content: "";
+      border-radius: 50%;
+      background: currentColor;
+      box-shadow: 0 0 12px currentColor;
+    }
+
+    .request-label {
+      grid-area: 1 / 1 / 2 / 9;
+      color: var(--request);
+    }
+
+    .response-label {
+      grid-area: 3 / 1 / 4 / 9;
+      margin-top: 12px;
+      color: var(--response);
+    }
+
+    .flow {
+      display: grid;
+      grid-template-columns: repeat(8, minmax(0, 1fr));
+      grid-template-rows: auto minmax(112px, auto) auto minmax(112px, auto);
+      gap: 16px 22px;
+    }
+
+    .node {
+      --accent: var(--request);
+      --accent-soft: var(--request-soft);
+      position: relative;
+      z-index: 1;
+      display: flex;
+      min-width: 0;
+      align-items: center;
+      gap: 13px;
+      padding: 17px 16px;
+      border: 1px solid color-mix(in srgb, var(--accent) 32%, transparent);
+      border-radius: var(--radius);
+      background:
+        linear-gradient(145deg, var(--accent-soft), rgba(255,255,255,0.025)),
+        var(--navy-2);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255,255,255,0.05);
+      transition: transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease;
+    }
+
+    .node:hover {
+      z-index: 2;
+      transform: translateY(-4px);
+      border-color: color-mix(in srgb, var(--accent) 68%, transparent);
+      box-shadow: 0 18px 36px rgba(0, 0, 0, 0.28), 0 0 24px color-mix(in srgb, var(--accent) 12%, transparent);
+    }
+
+    .node.response {
+      --accent: var(--response);
+      --accent-soft: var(--response-soft);
+    }
+
+    .database-node {
+      background:
+        linear-gradient(145deg, var(--request-soft), rgba(255, 189, 89, 0.06)),
+        var(--navy-2);
+    }
+
+    .database-node .icon {
+      border-color: rgba(255, 189, 89, 0.48);
+      color: var(--database);
+      background: var(--database-soft);
+    }
+
+    .dto {
+      border-color: rgba(167, 139, 250, 0.78);
+      background:
+        linear-gradient(145deg, rgba(167, 139, 250, 0.25), rgba(167, 139, 250, 0.07)),
+        var(--navy-2);
+      box-shadow:
+        0 16px 34px rgba(0, 0, 0, 0.24),
+        0 0 28px rgba(167, 139, 250, 0.18),
+        inset 0 1px 0 rgba(255,255,255,0.08);
+      transform: scale(1.035);
+    }
+
+    .dto::before {
+      position: absolute;
+      top: -10px;
+      right: 12px;
+      padding: 4px 8px;
+      content: "Data transformation";
+      border: 1px solid rgba(167, 139, 250, 0.45);
+      border-radius: 999px;
+      color: #d8ccff;
+      font-size: 0.5rem;
+      font-weight: 850;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: #271f51;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.22);
+    }
+
+    .dto:hover {
+      transform: translateY(-4px) scale(1.035);
+    }
+
+    .icon {
+      display: grid;
+      flex: 0 0 42px;
+      width: 42px;
+      height: 42px;
+      place-items: center;
+      border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+      border-radius: 13px;
+      color: var(--accent);
+      background: color-mix(in srgb, var(--accent) 10%, transparent);
+    }
+
+    .icon svg {
+      width: 22px;
+      height: 22px;
+      fill: none;
+      stroke: currentColor;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 1.8;
+    }
+
+    .copy {
+      min-width: 0;
+    }
+
+    .step {
+      display: block;
+      margin-bottom: 5px;
+      color: var(--accent);
+      font-size: 0.61rem;
+      font-weight: 850;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+
+    .name {
+      display: block;
+      overflow-wrap: anywhere;
+      font-size: clamp(0.82rem, 1.15vw, 0.98rem);
+      font-weight: 750;
+      line-height: 1.18;
+      letter-spacing: -0.015em;
+    }
+
+    .detail {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 0.67rem;
+      line-height: 1.25;
+    }
+
+    .node::after {
+      position: absolute;
+      z-index: -1;
+      content: "\279C";
+      color: var(--accent);
+      font-size: 26px;
+      line-height: 1;
+      text-shadow: 0 0 18px currentColor;
+    }
+
+    .right::after {
+      top: 50%;
+      left: calc(100% + 13px);
+      transform: translateY(-50%);
+    }
+
+    .left::after {
+      top: 50%;
+      right: calc(100% + 13px);
+      transform: translateY(-50%) rotate(180deg);
+    }
+
+    .down::after {
+      top: calc(100% + 11px);
+      left: 50%;
+      transform: translateX(-50%) rotate(90deg);
+    }
+
+    .turnaround::after {
+      color: var(--response);
+    }
+
+    .n1 { grid-area: 2 / 1; }
+    .n2 { grid-area: 2 / 2; }
+    .n3 { grid-area: 2 / 3; }
+    .n4 { grid-area: 2 / 4; }
+    .n5 { grid-area: 2 / 5; }
+    .n6 { grid-area: 2 / 6; }
+    .n7 { grid-area: 2 / 7; }
+    .n8 { grid-area: 2 / 8; }
+    .n9 { grid-area: 4 / 8; }
+    .n10 { grid-area: 4 / 7; }
+    .n11 { grid-area: 4 / 6; }
+    .n12 { grid-area: 4 / 5; }
+    .n13 { grid-area: 4 / 4; }
+    .n14 { grid-area: 4 / 3; }
+    .n15 { grid-area: 4 / 1 / 5 / 3; }
+
+    footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      margin-top: 24px;
+      color: var(--muted);
+      font-size: 0.76rem;
+    }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: currentColor;
+      box-shadow: 0 0 10px currentColor;
+    }
+
+    .request-key { color: var(--request); }
+    .data-key { color: var(--database); }
+    .response-key { color: var(--response); }
+
+    .architecture {
+      color: #8392b6;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 1500px) {
+      .presentation { padding: 32px; }
+      .flow-shell { padding: 22px; }
+      .node { gap: 8px; padding: 13px 10px; }
+      .icon { flex-basis: 34px; width: 34px; height: 34px; border-radius: 11px; }
+      .icon svg { width: 19px; height: 19px; }
+      .detail { display: none; }
+      .name { font-size: 0.8rem; }
+    }
+
+    @media (max-width: 1100px) {
+      body { padding: 20px; }
+      .presentation { padding: 30px; }
+      .flow {
+        display: flex;
+        flex-direction: column;
+        gap: 35px;
+      }
+      .path-label { margin: 8px 0 -12px; }
+      .node { min-height: 82px; }
+      .node::after,
+      .left::after,
+      .right::after,
+      .down::after {
+        top: calc(100% + 7px);
+        right: auto;
+        left: 50%;
+        transform: translateX(-50%) rotate(90deg);
+      }
+      .node:last-child::after { display: none; }
+      .dto { transform: none; }
+      .dto:hover { transform: translateY(-4px); }
+      .detail { display: block; }
+      .name { font-size: 0.95rem; }
+    }
+
+    @media (max-width: 760px) {
+      body { display: block; padding: 12px; }
+      .presentation { padding: 24px 18px; border-radius: 22px; }
+      header { align-items: flex-start; margin-bottom: 28px; }
+      .brand { width: 60px; height: 60px; border-radius: 18px; font-size: 1.1rem; }
+      .flow-shell { padding: 18px; }
+      .node {
+        flex-direction: row;
+        align-items: center;
+      }
+      .detail { display: block; }
+      footer { align-items: flex-start; flex-direction: column; }
+    }
+
+    @media print {
+      @page { size: landscape; margin: 0; }
+      body { min-height: 100vh; padding: 16px; print-color-adjust: exact; -webkit-print-color-adjust: exact; }
+      .presentation { width: 100%; box-shadow: none; }
+      .node:hover { transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="presentation">
+    <header>
+      <div>
+        <p class="eyebrow">System Architecture</p>
+        <h1>FixFlip ASP.NET Web API &ndash; Request&ndash;Response Flow</h1>
+        <p class="subtitle">Layered Architecture &mdash; Controller &rarr; Service &rarr; Data &rarr; Response</p>
+      </div>
+      <div class="brand" aria-label="FixFlip">FF</div>
+    </header>
+
+    <section class="flow-shell" aria-label="FixFlip backend request and response flow">
+      <div class="flow">
+        <div class="path-label request-label">Request Path</div>
+
+        <article class="node n1 right">
+          <span class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4"/></svg></span>
+          <span class="copy"><span class="step">01 &middot; Client</span><span class="name">Client / Postman</span><span class="detail">Sends the API call</span></span>
+        </article>
+
+        <article class="node n2 right">
+          <span class="icon"><svg viewBox="0 0 24 24"><path d="M5 12h14M14 7l5 5-5 5"/></svg></span>
+          <span class="copy"><span class="step">02 &middot; HTTP</span><span class="name">HTTP Request</span><span class="detail">Route, body &amp; headers</span></span>
+        </article>
+
+        <article class="node n3 right">
+          <span class="icon"><svg viewBox="0 0 24 24"><path d="M8 4H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h3M16 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M9 12h6M12 9v6"/></svg></span>
+          <span class="copy"><span class="step">03 &middot; API Layer</span><span class="name">Controller Layer</span><span class="detail">Receives &amp; validates</span></span>
+        </article>
+
+        <article class="node n4 right">
+          <span class="icon"><svg viewBox="0 0 24 24"><path d="M7 8l-4 4 4 4M17 8l4 4-4 4M14 4l-4 16"/></svg></span>
+          <span class="copy"><span class="step">04 &middot; Contracts</span><span class="name">Interface Layer</span><span class="detail">Defines service operations</span></span>
+        </article>
+
+        <article class="node n5 right">
+          <span class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-2.8 2.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6v.2h-4V21a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1L4.2 17l.1-.1a1.7 1.7 0 0 0 .3-1.9A1.7 1.7 0 0 0 3 14H2.8v-4H3a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9L4.2 7 7 4.2l.1.1a1.7 1.7 0 0 0 1.9.3A1.7 1.7 0 0 0 10 3V2.8h4V3a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1L19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.2v4H21a1.7 1.7 0 0 0-1.6 1Z"/></svg></span>
+          <span class="copy"><span class="step">05 &middot; Business Logic</span><span class="name">Service Layer</span><span class="detail">Processes the operation</span></span>
+        </article>
+
+        <article class="node n6 right">
+          <span class="icon"><svg viewBox="0 0 24 24"><path d="M4 5h16v14H4zM8 9h8M8 13h5"/></svg></span>
+          <span class="copy"><span class="step">06 &middot; Data Layer</span><span class="name">AppDbContext</span><span class="detail">Accesses application data</span></span>
+        </article>
+
+        <article class="node n7 right">
+          <span class="icon"><svg viewBox="0 0 24 24"><path d="M6 3h12v5H6zM6 16h12v5H6zM12 8v8M8 12h8"/></svg></span>
+          <span class="copy"><span class="step">07 &middot; ORM</span><span class="name">Entity Framework Core</span><span class="detail">Translates queries to SQL</span></span>
+        </article>
+
+        <article class="node database-node n8 down turnaround">
+          <span class="icon"><svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="8" ry="3"/><path d="M4 5v7c0 1.7 3.6 3 8 3s8-1.3 8-3V5M4 12v7c0 1.7 3.6 3 8 3s8-1.3 8-3v-7"/></svg></span>
+          <span class="copy"><span class="step">08 &middot; Persistence</span><span class="name">SQL Database</span><span class="detail">Reads or writes data</span></span>
+        </article>
+
+        <div class="path-label response-label">Response Path</div>
+
+        <article class="node response n9 left">
+          <span class="icon"><svg viewBox="0 0 24 24"><path d="M6 3h12v5H6zM6 16h12v5H6zM12 8v8M8 12h8"/></svg></span>
+          <span class="copy"><span class="step">09 &middot; ORM</span><span class="name">Entity Framework Core</span><span class="detail">Maps results to entities</span></span>
+        </article>
+
+        <article class="node response n10 left">
+          <span class="icon"><svg viewBox="0 0 24 24"><path d="M4 5h16v14H4zM8 9h8M8 13h5"/></svg></span>
+          <span class="copy"><span class="step">10 &middot; Data Layer</span><span class="name">AppDbContext</span><span class="detail">Returns application data</span></span>
+        </article>
+
+        <article class="node response n11 left">
+          <span class="icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M4 12a8 8 0 1 0 16 0 8 8 0 0 0-16 0"/></svg></span>
+          <span class="copy"><span class="step">11 &middot; Business Logic</span><span class="name">Service Layer</span><span class="detail">Prepares the result</span></span>
+        </article>
+
+        <article class="node response dto n12 left">
+          <span class="icon"><svg viewBox="0 0 24 24"><path d="M6 3h9l4 4v14H6zM14 3v5h5M9 13h6M9 17h4"/></svg></span>
+          <span class="copy"><span class="step">12 &middot; Data Shape</span><span class="name">DTO Layer</span><span class="detail">Transforms data for output</span></span>
+        </article>
+
+        <article class="node response n13 left">
+          <span class="icon"><svg viewBox="0 0 24 24"><path d="M8 4H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h3M16 4h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-3M15 12H9M12 9l-3 3 3 3"/></svg></span>
+          <span class="copy"><span class="step">13 &middot; API Layer</span><span class="name">Controller Layer</span><span class="detail">Creates the HTTP result</span></span>
+        </article>
+
+        <article class="node response n14 left">
+          <span class="icon"><svg viewBox="0 0 24 24"><path d="M19 12H5M10 7l-5 5 5 5"/><path d="M14 4h5a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-5"/></svg></span>
+          <span class="copy"><span class="step">14 &middot; HTTP</span><span class="name">HTTP Response</span><span class="detail">Returns status &amp; JSON</span></span>
+        </article>
+
+        <article class="node response n15">
+          <span class="icon"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21h8M12 17v4M8 10l3 3 5-6"/></svg></span>
+          <span class="copy"><span class="step">15 &middot; Client</span><span class="name">Client Receives Data</span><span class="detail">Consumes the returned result</span></span>
+        </article>
+      </div>
+    </section>
+
+    <footer>
+      <div class="legend" aria-label="Color legend">
+        <span class="legend-item request-key"><span class="dot"></span>Request path</span>
+        <span class="legend-item data-key"><span class="dot"></span>SQL database</span>
+        <span class="legend-item response-key"><span class="dot"></span>Response path</span>
+      </div>
+      <span class="architecture">FixFlip &middot; ASP.NET Core Architecture</span>
+    </footer>
+  </main>
+</body>
+</html>
