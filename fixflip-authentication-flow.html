@@ -143,6 +143,29 @@
       font-weight: 750;
     }
 
+    .click-instruction {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin: 10px 0 0;
+      padding: 6px 10px;
+      border: 1px solid rgba(79, 209, 197, 0.18);
+      border-radius: 999px;
+      color: #90a3c8;
+      font-size: 0.68rem;
+      font-weight: 700;
+      background: rgba(79, 209, 197, 0.045);
+    }
+
+    .click-instruction::before {
+      width: 6px;
+      height: 6px;
+      content: "";
+      border-radius: 50%;
+      background: var(--register);
+      box-shadow: 0 0 10px var(--register);
+    }
+
     .brand {
       display: grid;
       flex: 0 0 auto;
@@ -311,6 +334,30 @@
       transform: translateY(-3px);
       border-color: color-mix(in srgb, var(--accent) 62%, transparent);
       box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25), 0 0 24px color-mix(in srgb, var(--accent) 10%, transparent);
+    }
+
+    .step-card[data-step-key],
+    .mini-card[data-step-key] {
+      cursor: pointer;
+    }
+
+    .step-card[data-step-key]:focus-visible,
+    .mini-card[data-step-key]:focus-visible {
+      z-index: 3;
+      outline: 2px solid var(--accent, var(--jwt));
+      outline-offset: 4px;
+      transform: translateY(-3px);
+      box-shadow: 0 0 0 5px rgba(255,255,255,.05), 0 15px 30px rgba(0,0,0,.25);
+    }
+
+    .step-card[data-step-key].is-selected {
+      border-color: color-mix(in srgb, var(--accent) 78%, transparent);
+      box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 12%, transparent), 0 15px 30px rgba(0,0,0,.25);
+    }
+
+    .mini-card[data-step-key].is-selected {
+      border-color: rgba(255, 189, 89, 0.82);
+      box-shadow: 0 0 0 3px rgba(255,189,89,.11), 0 17px 34px rgba(0,0,0,.26);
     }
 
     .card-icon {
@@ -568,6 +615,13 @@
       transform: translateX(-50%);
     }
 
+    .mini-card:hover {
+      z-index: 2;
+      transform: translateY(-3px);
+      border-color: rgba(255, 189, 89, 0.72);
+      box-shadow: 0 17px 34px rgba(0,0,0,.26), 0 0 25px rgba(255,189,89,.1);
+    }
+
     .mini-icon {
       display: grid;
       flex: 0 0 50px;
@@ -641,6 +695,204 @@
       text-transform: uppercase;
     }
 
+    body.panel-open {
+      overflow: hidden;
+    }
+
+    .explanation-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: flex-end;
+      visibility: hidden;
+      opacity: 0;
+      background: rgba(2, 8, 22, 0.72);
+      backdrop-filter: blur(8px);
+      transition: opacity 220ms ease, visibility 220ms ease;
+    }
+
+    .explanation-overlay.open {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .explanation-panel {
+      --panel-accent: var(--register);
+      position: relative;
+      display: flex;
+      width: min(540px, 94vw);
+      height: 100dvh;
+      flex-direction: column;
+      overflow: hidden;
+      border-left: 1px solid color-mix(in srgb, var(--panel-accent) 32%, transparent);
+      color: var(--text);
+      background:
+        radial-gradient(circle at 100% 0%, color-mix(in srgb, var(--panel-accent) 14%, transparent), transparent 34%),
+        linear-gradient(155deg, #12234a, #08142f 62%, #071127);
+      box-shadow: -28px 0 75px rgba(0,0,0,.42);
+      transform: translateX(102%);
+      transition: transform 260ms cubic-bezier(.2,.75,.25,1);
+    }
+
+    .explanation-overlay.open .explanation-panel {
+      transform: translateX(0);
+    }
+
+    .panel-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 25px 26px 19px;
+      border-bottom: 1px solid rgba(172, 190, 230, 0.15);
+    }
+
+    .panel-flow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--panel-accent);
+      font-size: 0.68rem;
+      font-weight: 850;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .panel-flow::before {
+      width: 7px;
+      height: 7px;
+      content: "";
+      border-radius: 50%;
+      background: currentColor;
+      box-shadow: 0 0 12px currentColor;
+    }
+
+    .panel-close {
+      display: grid;
+      width: 38px;
+      height: 38px;
+      padding: 0;
+      place-items: center;
+      border: 1px solid rgba(185, 199, 231, 0.22);
+      border-radius: 12px;
+      color: #c8d2ea;
+      font: 700 1.25rem/1 system-ui, sans-serif;
+      background: rgba(255,255,255,.04);
+      cursor: pointer;
+      transition: border-color 160ms ease, color 160ms ease, background 160ms ease;
+    }
+
+    .panel-close:hover,
+    .panel-close:focus-visible {
+      border-color: color-mix(in srgb, var(--panel-accent) 55%, transparent);
+      outline: none;
+      color: white;
+      background: color-mix(in srgb, var(--panel-accent) 10%, transparent);
+    }
+
+    .panel-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 28px 28px 34px;
+      scrollbar-color: color-mix(in srgb, var(--panel-accent) 45%, transparent) transparent;
+    }
+
+    .panel-step-number {
+      margin: 0 0 7px;
+      color: var(--panel-accent);
+      font-size: 0.68rem;
+      font-weight: 850;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    .panel-title {
+      margin: 0;
+      font-size: clamp(1.65rem, 5vw, 2.15rem);
+      line-height: 1.16;
+      letter-spacing: -0.035em;
+    }
+
+    .panel-arabic {
+      margin-top: 28px;
+      direction: rtl;
+      text-align: right;
+      font-family: Tahoma, Arial, sans-serif;
+    }
+
+    .panel-section {
+      margin-bottom: 22px;
+      padding: 18px 19px;
+      border: 1px solid rgba(171, 190, 232, 0.16);
+      border-radius: 16px;
+      background: rgba(255,255,255,.035);
+    }
+
+    .panel-section.importance {
+      border-color: color-mix(in srgb, var(--panel-accent) 30%, transparent);
+      background: color-mix(in srgb, var(--panel-accent) 7%, transparent);
+    }
+
+    .panel-section h3 {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin: 0 0 9px;
+      color: var(--panel-accent);
+      font-size: 0.77rem;
+      font-weight: 850;
+      letter-spacing: 0.04em;
+    }
+
+    .panel-section h3::before {
+      width: 5px;
+      height: 5px;
+      content: "";
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .panel-section p {
+      margin: 0;
+      color: #dce4f8;
+      font-size: 0.98rem;
+      line-height: 1.9;
+    }
+
+    .pdf-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      margin-top: 8px;
+      padding: 14px 18px;
+      border: 1px solid color-mix(in srgb, var(--panel-accent) 48%, transparent);
+      border-radius: 14px;
+      color: #071127;
+      font-size: 0.86rem;
+      font-weight: 850;
+      text-decoration: none;
+      background: var(--panel-accent);
+      box-shadow: 0 12px 25px color-mix(in srgb, var(--panel-accent) 16%, transparent);
+      transition: transform 160ms ease, filter 160ms ease;
+    }
+
+    .pdf-button:hover,
+    .pdf-button:focus-visible {
+      outline: none;
+      filter: brightness(1.1);
+      transform: translateY(-2px);
+    }
+
+    .pdf-page-note {
+      margin: 10px 0 0;
+      color: #8493b5;
+      font-size: 0.67rem;
+      text-align: center;
+    }
+
     @media (max-width: 980px) {
       body { padding: 20px; }
       .presentation { padding: 30px; }
@@ -667,6 +919,7 @@
       .section-heading { align-items: flex-start; flex-wrap: wrap; }
       .section-heading span { width: 100%; margin-left: 19px; }
       .mini-flow { gap: 40px; }
+      .explanation-panel { width: 100%; }
       footer { align-items: flex-start; flex-direction: column; }
     }
 
@@ -682,6 +935,9 @@
       .after-login { padding: 18px; }
       .compare-title { align-items: flex-start; flex-direction: column; }
       .mini-card { padding: 17px 15px; }
+      .panel-top { padding: 19px 18px 15px; }
+      .panel-content { padding: 23px 18px 28px; }
+      .panel-section { padding: 16px; }
     }
 
     @media print {
@@ -694,6 +950,7 @@
       }
       .presentation { box-shadow: none; }
       .step-card:hover { transform: none; }
+      .explanation-overlay { display: none; }
     }
   </style>
 </head>
@@ -705,6 +962,7 @@
         <h1>FixFlip ASP.NET Web API &ndash; Authentication Flow</h1>
         <p class="subtitle">Register vs Login Flow using ASP.NET Identity and JWT</p>
         <p class="architecture-note"><strong>Architecture note:</strong> Authentication Flow does NOT access business services directly.<br>Identity + JWT handle authentication and authorization.</p>
+        <p class="click-instruction">Click any step to view its explanation</p>
       </div>
       <div class="brand" aria-label="FixFlip">FF</div>
     </header>
@@ -929,5 +1187,360 @@
       <span class="architecture">FixFlip &middot; ASP.NET Identity &middot; JWT</span>
     </footer>
   </main>
+
+  <div class="explanation-overlay" id="explanationOverlay" aria-hidden="true">
+    <aside class="explanation-panel" id="explanationPanel" role="dialog" aria-modal="true" aria-labelledby="panelTitle">
+      <div class="panel-top">
+        <span class="panel-flow" id="panelFlow">Register Flow</span>
+        <button class="panel-close" id="panelClose" type="button" aria-label="Close explanation">&times;</button>
+      </div>
+      <div class="panel-content">
+        <p class="panel-step-number" id="panelStepNumber">Step 01</p>
+        <h2 class="panel-title" id="panelTitle">Client / Postman</h2>
+        <div class="panel-arabic" lang="ar" dir="rtl">
+          <section class="panel-section">
+            <h3>شرح الخطوة</h3>
+            <p id="panelExplanation"></p>
+          </section>
+          <section class="panel-section importance">
+            <h3>لماذا هذه الخطوة مهمة؟</h3>
+            <p id="panelImportance"></p>
+          </section>
+        </div>
+        <a class="pdf-button" id="panelPdfLink" href="fixflip-authentication-flow-explanation-ar.pdf#page=2" target="_blank" rel="noopener">
+          <span>Open PDF Page</span>
+          <span aria-hidden="true">&nearr;</span>
+        </a>
+        <p class="pdf-page-note" id="panelPageNote">Related explanation: PDF page 2</p>
+      </div>
+    </aside>
+  </div>
+
+  <script>
+    const explanationData = {
+      "register-client": {
+        title: "Client / Postman",
+        flow: "Register Flow",
+        step: "Step 01",
+        page: 2,
+        explanation: "يبدأ المستخدم أو Postman عملية التسجيل ويرسل البيانات المطلوبة لإنشاء الحساب، مثل اسم المستخدم والإيميل وكلمة المرور.",
+        importance: "تمثل نقطة البداية التي تدخل منها بيانات الحساب الجديد إلى النظام، ومنها يبدأ Register Flow بالكامل."
+      },
+      "register-controller": {
+        title: "AuthController",
+        flow: "Register Flow",
+        step: "Step 02",
+        page: 2,
+        explanation: "يستقبل AuthController طلب التسجيل القادم إلى POST /api/auth/register، ويقرأ البيانات المرسلة ثم يمررها إلى نظام Identity لتنفيذ العملية.",
+        importance: "يفصل طبقة HTTP عن منطق إدارة الهوية، وينظم انتقال طلب التسجيل إلى المكونات المسؤولة بدون الوصول إلى Business Services."
+      },
+      "register-dto": {
+        title: "RegisterDto",
+        flow: "Register Flow",
+        step: "Step 03",
+        page: 2,
+        explanation: "يستقبل RegisterDto فقط البيانات اللازمة للتسجيل، مثل UserName وEmail وPassword، بدل استقبال User Entity كامل.",
+        importance: "يحدد شكل الإدخال بوضوح، ويقلل البيانات غير المطلوبة، ويحمي الخصائص الداخلية الخاصة بالمستخدم."
+      },
+      "register-validation": {
+        title: "Validation",
+        flow: "Register Flow",
+        step: "Step 04",
+        page: 3,
+        explanation: "يتأكد النظام أن الإيميل واسم المستخدم وكلمة المرور موجودة وأن صيغتها مقبولة. عند وجود مشكلة يعيد غالبًا 400 Bad Request مع أخطاء التحقق.",
+        importance: "يمنع وصول بيانات ناقصة أو غير صحيحة إلى ASP.NET Identity وقاعدة البيانات."
+      },
+      "register-duplicate": {
+        title: "Check Existing Email / Username",
+        flow: "Register Flow",
+        step: "Step 05",
+        page: 3,
+        explanation: "يبحث النظام عن الإيميل أو اسم المستخدم قبل إنشاء الحساب للتأكد من أنهما غير مستخدمين مسبقًا. عند وجود تطابق تتوقف العملية وتفشل عملية التسجيل.",
+        importance: "يحافظ على تفرّد بيانات المستخدم ويمنع إنشاء حسابات متعددة بنفس الإيميل أو اسم المستخدم."
+      },
+      "register-user-manager": {
+        title: "UserManager",
+        flow: "Register Flow",
+        step: "Step 06",
+        page: 3,
+        explanation: "UserManager هو API أساسي داخل ASP.NET Identity لإدارة المستخدمين. في التسجيل ينفذ العملية الأهم: UserManager.CreateAsync.",
+        importance: "يجمع قواعد إنشاء المستخدم وإدارة كلمة المرور والهوية في مكوّن موثوق بدل تنفيذها يدويًا."
+      },
+      "register-identity": {
+        title: "ASP.NET Identity",
+        flow: "Register Flow",
+        step: "Step 07",
+        page: 3,
+        explanation: "ASP.NET Identity يدير المستخدمين وكلمات المرور والـRoles وقواعد الأمان. لا يخزن كلمة المرور كنص عادي، بل يحولها إلى PasswordHash آمن.",
+        importance: "يوفر نظام هوية جاهزًا وآمنًا ويمنع الأخطاء الخطيرة مثل تخزين كلمات المرور بصيغة واضحة."
+      },
+      "register-create-user": {
+        title: "Create User",
+        flow: "Register Flow",
+        step: "Step 08",
+        page: 4,
+        explanation: "تتحول بيانات RegisterDto إلى User داخل النظام، وتبدأ عملية إنشاء المستخدم فعليًا باستخدام UserManager وASP.NET Identity.",
+        importance: "هذه هي اللحظة التي تتحول فيها بيانات الإدخال إلى حساب حقيقي قابل للحفظ والاستخدام."
+      },
+      "register-database": {
+        title: "SQL Database",
+        flow: "Register Flow",
+        step: "Step 09",
+        page: 4,
+        explanation: "يُحفظ المستخدم داخل قاعدة البيانات، غالبًا في جدول AspNetUsers، بينما تُدار الأدوار من خلال جداول مثل AspNetRoles.",
+        importance: "توفر التخزين الدائم للحساب حتى يستطيع المستخدم تسجيل الدخول في الطلبات المستقبلية."
+      },
+      "register-response": {
+        title: "HTTP Response",
+        flow: "Register Flow",
+        step: "Step 10",
+        page: 4,
+        explanation: "بعد انتهاء العملية يعيد السيرفر استجابة توضح النتيجة: 200 OK عند النجاح، أو 400 Bad Request عند فشل التحقق أو وجود بيانات مكررة.",
+        importance: "تعطي العميل نتيجة قياسية وواضحة يستطيع من خلالها عرض رسالة نجاح أو معالجة الأخطاء."
+      },
+      "register-message": {
+        title: "Client Receives Message",
+        flow: "Register Flow",
+        step: "Step 11",
+        page: 4,
+        explanation: "يستلم العميل رسالة التسجيل النهائية، مثل User registered successfully، أو يستلم تفاصيل الأخطاء لعرضها للمستخدم.",
+        importance: "تغلق دورة التسجيل وتخبر المستخدم بوضوح هل تم إنشاء الحساب أم يحتاج إلى تعديل البيانات."
+      },
+      "login-client": {
+        title: "Client / Postman",
+        flow: "Login Flow",
+        step: "Step 01",
+        page: 5,
+        explanation: "يرسل المستخدم أو Postman بيانات الدخول، وهي عادة الإيميل وكلمة المرور، لبدء عملية التحقق من الحساب.",
+        importance: "تمثل نقطة بداية Login Flow وتوفر بيانات الاعتماد التي سيستخدمها Identity للتحقق من المستخدم."
+      },
+      "login-controller": {
+        title: "AuthController",
+        flow: "Login Flow",
+        step: "Step 02",
+        page: 5,
+        explanation: "يستقبل AuthController طلب POST /api/auth/login، ويقرأ الإيميل وكلمة المرور، ثم ينسق عملية التحقق وتوليد Token عند النجاح.",
+        importance: "يربط طلب HTTP بمكونات Identity وJwtService مع إبقاء Authentication Flow منفصلًا عن Business Services."
+      },
+      "login-dto": {
+        title: "LoginDto",
+        flow: "Login Flow",
+        step: "Step 03",
+        page: 5,
+        explanation: "يحتوي LoginDto على البيانات المطلوبة فقط لتسجيل الدخول، وعادة تكون Email وPassword.",
+        importance: "يحافظ على عقد إدخال بسيط وآمن ويمنع إرسال أو استقبال حقول لا تحتاجها عملية الدخول."
+      },
+      "login-user-manager": {
+        title: "UserManager",
+        flow: "Login Flow",
+        step: "Step 04",
+        page: 6,
+        explanation: "يُستخدم UserManager للوصول إلى بيانات المستخدم المسجلة داخل ASP.NET Identity والبحث عن الحساب المطلوب.",
+        importance: "يوفر طريقة موحدة وآمنة للتعامل مع المستخدمين بدل كتابة استعلامات هوية مخصصة."
+      },
+      "login-find-user": {
+        title: "Find User By Email",
+        flow: "Login Flow",
+        step: "Step 05",
+        page: 6,
+        explanation: "ينفذ النظام UserManager.FindByEmailAsync للبحث عن مستخدم يحمل الإيميل المرسل. إذا لم يوجد الحساب يعيد 401 Unauthorized.",
+        importance: "يتأكد من وجود الهوية قبل محاولة فحص كلمة المرور أو إنشاء JWT Token."
+      },
+      "login-signin-manager": {
+        title: "SignInManager",
+        flow: "Login Flow",
+        step: "Step 06",
+        page: 6,
+        explanation: "بعد العثور على المستخدم، يستخدم النظام SignInManager لإدارة محاولة تسجيل الدخول والتحقق من بيانات الاعتماد.",
+        importance: "يطبق آليات Identity القياسية لفحص الدخول ويمكنه دعم سياسات مثل القفل بعد المحاولات الفاشلة."
+      },
+      "login-password": {
+        title: "Check Password",
+        flow: "Login Flow",
+        step: "Step 07",
+        page: 6,
+        explanation: "يقارن Identity كلمة المرور المرسلة مع PasswordHash المخزن باستخدام CheckPasswordSignInAsync. الخطأ يعيد 401 Unauthorized، والصحة تسمح بمتابعة إنشاء التوكن.",
+        importance: "يثبت أن صاحب الطلب يعرف كلمة المرور بدون كشف كلمة المرور المخزنة أو مقارنتها كنص عادي."
+      },
+      "login-jwt-service": {
+        title: "JwtService",
+        flow: "Login Flow",
+        step: "Step 08",
+        page: 6,
+        explanation: "بعد نجاح التحقق، تبني JwtService الـClaims ومعلومات التوقيع ومدة الصلاحية اللازمة لإنشاء JWT Token.",
+        importance: "تفصل مسؤولية إنشاء التوكن عن Controller وتضمن أن جميع التوكنات تُنشأ بطريقة موحدة."
+      },
+      "login-generate-token": {
+        title: "Generate JWT Token",
+        flow: "Login Flow",
+        step: "Step 09",
+        page: 7,
+        explanation: "ينشئ النظام Token موقّعًا يثبت هوية المستخدم، وقد يتضمن User ID وEmail وRoles ووقت انتهاء الصلاحية.",
+        importance: "يسمح للمستخدم بإثبات هويته في الطلبات التالية بدون إرسال الإيميل وكلمة المرور في كل مرة."
+      },
+      "login-response": {
+        title: "HTTP Response",
+        flow: "Login Flow",
+        step: "Step 10",
+        page: 7,
+        explanation: "يعيد السيرفر HTTP Response يحتوي على JWT Token عند نجاح تسجيل الدخول، أو يعيد خطأ مصادقة عند فشل البيانات.",
+        importance: "ينقل نتيجة المصادقة إلى العميل بصيغة قياسية يمكن للـFrontend أو Postman التعامل معها."
+      },
+      "login-token": {
+        title: "Client Receives Token",
+        flow: "Login Flow",
+        step: "Step 11",
+        page: 7,
+        explanation: "يستلم العميل JWT Token ويحفظه، سواء كان Postman أو Frontend أو Mobile App، لاستخدامه في الطلبات المحمية.",
+        importance: "يربط Login Flow بمرحلة Authorization ويمنح العميل الوسيلة المطلوبة لإثبات هويته لاحقًا."
+      },
+      "after-store-token": {
+        title: "Client Stores JWT Token",
+        flow: "After Login",
+        step: "Step 01",
+        page: 8,
+        explanation: "يحفظ العميل التوكن داخل Postman أو التطبيق بعد نجاح تسجيل الدخول، حتى يستخدمه مع الطلبات التي تحتاج إلى مصادقة.",
+        importance: "بدون حفظ التوكن لن يستطيع العميل إرساله مع الطلبات التالية والوصول إلى الموارد المحمية."
+      },
+      "after-send-token": {
+        title: "Client Sends Authorization: Bearer Token",
+        flow: "After Login",
+        step: "Step 02",
+        page: 8,
+        explanation: "يرسل العميل JWT داخل Authorization Header بصيغة Bearer Token مع كل طلب يحتاج تسجيل دخول، مثل GET /api/car.",
+        importance: "هذه هي الطريقة القياسية التي ينقل بها العميل إثبات هويته إلى ASP.NET Web API."
+      },
+      "after-authorize": {
+        title: "[Authorize] Validates Token",
+        flow: "After Login",
+        step: "Step 03",
+        page: 8,
+        explanation: "عند وجود [Authorize] يفحص النظام وجود التوكن، وصحة التوقيع، ووقت الانتهاء، والـClaims والـRoles المطلوبة.",
+        importance: "يمنع الطلبات غير الموثوقة من الوصول إلى Controller ويطبق Authentication وAuthorization قبل تنفيذ الـEndpoint."
+      },
+      "after-access": {
+        title: "Access Protected Endpoint",
+        flow: "After Login",
+        step: "Step 04",
+        page: 8,
+        explanation: "إذا كان التوكن صحيحًا يكمل الطلب إلى Controller. التوكن المفقود أو غير الصحيح يعيد 401 Unauthorized، وعدم امتلاك الصلاحية يعيد 403 Forbidden.",
+        importance: "يمثل القرار النهائي الذي يحمي بيانات ووظائف النظام ويضمن وصول المستخدمين المصرح لهم فقط."
+      }
+    };
+
+    const registerKeys = [
+      "register-client", "register-controller", "register-dto", "register-validation",
+      "register-duplicate", "register-user-manager", "register-identity",
+      "register-create-user", "register-database", "register-response", "register-message"
+    ];
+    const loginKeys = [
+      "login-client", "login-controller", "login-dto", "login-user-manager",
+      "login-find-user", "login-signin-manager", "login-password",
+      "login-jwt-service", "login-generate-token", "login-response", "login-token"
+    ];
+    const afterLoginKeys = [
+      "after-store-token", "after-send-token", "after-authorize", "after-access"
+    ];
+
+    const overlay = document.getElementById("explanationOverlay");
+    const panel = document.getElementById("explanationPanel");
+    const closeButton = document.getElementById("panelClose");
+    const flowLabel = document.getElementById("panelFlow");
+    const stepNumber = document.getElementById("panelStepNumber");
+    const panelTitle = document.getElementById("panelTitle");
+    const explanation = document.getElementById("panelExplanation");
+    const importance = document.getElementById("panelImportance");
+    const pdfLink = document.getElementById("panelPdfLink");
+    const pageNote = document.getElementById("panelPageNote");
+    let lastTrigger = null;
+
+    const flowColors = {
+      "Register Flow": "#4fd1c5",
+      "Login Flow": "#a78bfa",
+      "After Login": "#ffbd59"
+    };
+
+    function openExplanation(key, trigger) {
+      const data = explanationData[key];
+      if (!data) return;
+
+      document.querySelectorAll(".is-selected").forEach((card) => card.classList.remove("is-selected"));
+      trigger.classList.add("is-selected");
+      lastTrigger = trigger;
+
+      panel.style.setProperty("--panel-accent", flowColors[data.flow]);
+      flowLabel.textContent = data.flow;
+      stepNumber.textContent = data.step;
+      panelTitle.textContent = data.title;
+      explanation.textContent = data.explanation;
+      importance.textContent = data.importance;
+      pdfLink.href = `fixflip-authentication-flow-explanation-ar.pdf#page=${data.page}`;
+      pageNote.textContent = `Related explanation: PDF page ${data.page}`;
+
+      overlay.classList.add("open");
+      overlay.setAttribute("aria-hidden", "false");
+      document.body.classList.add("panel-open");
+      requestAnimationFrame(() => closeButton.focus());
+    }
+
+    function closeExplanation() {
+      const triggerToRestore = lastTrigger;
+      overlay.classList.remove("open");
+      overlay.setAttribute("aria-hidden", "true");
+      document.body.classList.remove("panel-open");
+      document.querySelectorAll(".is-selected").forEach((card) => card.classList.remove("is-selected"));
+      if (triggerToRestore) {
+        requestAnimationFrame(() => triggerToRestore.focus({ preventScroll: true }));
+      }
+    }
+
+    function wireCards(selector, keys) {
+      const cards = [...document.querySelectorAll(selector)];
+      cards.forEach((card, index) => {
+        const key = keys[index];
+        const data = explanationData[key];
+        card.dataset.stepKey = key;
+        card.tabIndex = 0;
+        card.setAttribute("role", "button");
+        card.setAttribute("aria-haspopup", "dialog");
+        card.setAttribute("aria-label", `Open Arabic explanation for ${data.title}`);
+        card.title = "Click to view Arabic explanation";
+        card.addEventListener("click", () => openExplanation(key, card));
+        card.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            openExplanation(key, card);
+          }
+        });
+      });
+    }
+
+    wireCards(".lane.register .step-card", registerKeys);
+    wireCards(".lane.login .step-card", loginKeys);
+    wireCards(".after-login .mini-card", afterLoginKeys);
+
+    closeButton.addEventListener("click", closeExplanation);
+    overlay.addEventListener("click", (event) => {
+      if (event.target === overlay) closeExplanation();
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && overlay.classList.contains("open")) {
+        closeExplanation();
+      }
+      if (event.key === "Tab" && overlay.classList.contains("open")) {
+        const focusable = [...panel.querySelectorAll("button, a[href]")];
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
+      }
+    });
+  </script>
 </body>
 </html>
