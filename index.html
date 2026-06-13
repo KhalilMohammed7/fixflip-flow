@@ -1,0 +1,599 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="FlipFix university project presentation - Smart Vehicle Lifecycle Management System.">
+  <title>FlipFix | Smart Vehicle Lifecycle Management System</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+
+  <div class="scroll-progress" aria-hidden="true">
+    <span id="scrollProgress"></span>
+  </div>
+
+  <header class="site-header" id="siteHeader">
+    <nav class="nav-shell container" aria-label="Primary navigation">
+      <a class="brand" href="#home" aria-label="FlipFix home">
+        <span class="brand-mark" aria-hidden="true">FF</span>
+        <span class="brand-copy">
+          <strong>FlipFix</strong>
+          <small>Project Presentation</small>
+        </span>
+      </a>
+
+      <button class="nav-toggle" id="navToggle" type="button" aria-expanded="false" aria-controls="navLinks">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span class="sr-only">Toggle navigation</span>
+      </button>
+
+      <div class="nav-panel" id="navLinks">
+        <a class="nav-link active" href="#home">Overview</a>
+        <a class="nav-link" href="#problem">Problem</a>
+        <a class="nav-link" href="#lifecycle">Lifecycle</a>
+        <a class="nav-link" href="#mobile">Mobile</a>
+        <a class="nav-link" href="#admin">Admin</a>
+        <a class="nav-link" href="#benefits">Benefits</a>
+        <a class="nav-link" href="#conclusion">Conclusion</a>
+      </div>
+
+      <button class="present-button" id="presentButton" type="button">
+        <svg class="icon" aria-hidden="true"><use href="#icon-present"></use></svg>
+        <span>Present</span>
+      </button>
+    </nav>
+  </header>
+
+  <main id="main-content">
+    <section class="section hero" id="home" data-section="Overview">
+      <div class="hero-orb hero-orb-one" aria-hidden="true"></div>
+      <div class="hero-orb hero-orb-two" aria-hidden="true"></div>
+
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <div class="eyebrow hero-enter" style="--delay: 0ms">
+            <span class="eyebrow-dot"></span>
+            University Project
+            <span class="eyebrow-separator"></span>
+            Vehicle Management
+          </div>
+
+          <h1 class="hero-title hero-enter" style="--delay: 100ms">FlipFix</h1>
+          <p class="hero-subtitle hero-enter" style="--delay: 180ms">
+            Smart Vehicle Lifecycle<br>Management System
+          </p>
+          <p class="hero-description hero-enter" style="--delay: 260ms">
+            One connected record from vehicle purchase to maintenance, insight, and resale.
+          </p>
+
+          <div class="hero-actions hero-enter" style="--delay: 340ms">
+            <a class="button button-primary" href="#problem">
+              Explore Project
+              <svg class="icon" aria-hidden="true"><use href="#icon-arrow-down"></use></svg>
+            </a>
+            <div class="platform-note" aria-label="Supported project platforms">
+              <span>Mobile App</span>
+              <i></i>
+              <span>Web Admin</span>
+              <i></i>
+              <span>.NET API</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual hero-enter" style="--delay: 220ms" aria-label="Illustration of a connected vehicle lifecycle">
+          <div class="visual-stage" id="heroVisual">
+            <div class="visual-grid" aria-hidden="true"></div>
+            <div class="visual-ring ring-one" aria-hidden="true"></div>
+            <div class="visual-ring ring-two" aria-hidden="true"></div>
+
+            <svg class="car-illustration" viewBox="0 0 760 430" role="img" aria-labelledby="carTitle carDesc">
+              <title id="carTitle">Modern vehicle illustration</title>
+              <desc id="carDesc">A blue vehicle connected to lifecycle status indicators.</desc>
+              <defs>
+                <linearGradient id="carBody" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#9cc7f3"></stop>
+                  <stop offset="1" stop-color="#6f75d8"></stop>
+                </linearGradient>
+                <linearGradient id="windowFill" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#f7fbff"></stop>
+                  <stop offset="1" stop-color="#cbdff1"></stop>
+                </linearGradient>
+                <filter id="softShadow" x="-30%" y="-30%" width="160%" height="180%">
+                  <feDropShadow dx="0" dy="20" stdDeviation="18" flood-color="#52647c" flood-opacity=".18"></feDropShadow>
+                </filter>
+              </defs>
+              <ellipse cx="390" cy="348" rx="278" ry="38" fill="#dce7f3" opacity=".7"></ellipse>
+              <g filter="url(#softShadow)">
+                <path d="M161 283c8-48 28-91 75-111l88-41c26-12 54-18 83-18h86c31 0 60 11 83 31l80 70c25 7 43 27 47 52l7 43H137l24-26z" fill="url(#carBody)"></path>
+                <path d="M290 170l54-29c21-11 45-17 69-17h77c22 0 44 8 60 23l61 54H267l23-31z" fill="url(#windowFill)" opacity=".92"></path>
+                <path d="M433 124v77M271 201h338" fill="none" stroke="#7f9bb4" stroke-width="5" stroke-linecap="round"></path>
+                <path d="M170 282h498c22 0 39 18 39 40H130c0-22 18-40 40-40z" fill="#6b75c9"></path>
+                <path d="M151 290h84M631 290h57" fill="none" stroke="#d9edff" stroke-width="15" stroke-linecap="round"></path>
+                <path d="M336 246h82" fill="none" stroke="#edf7ff" stroke-width="8" stroke-linecap="round" opacity=".8"></path>
+                <circle cx="244" cy="317" r="54" fill="#35435c"></circle>
+                <circle cx="244" cy="317" r="30" fill="#f5f8fc"></circle>
+                <circle cx="244" cy="317" r="14" fill="#8ba6c0"></circle>
+                <circle cx="592" cy="317" r="54" fill="#35435c"></circle>
+                <circle cx="592" cy="317" r="30" fill="#f5f8fc"></circle>
+                <circle cx="592" cy="317" r="14" fill="#8ba6c0"></circle>
+              </g>
+            </svg>
+
+            <div class="floating-card visual-card-one">
+              <span class="floating-icon blue">
+                <svg class="icon" aria-hidden="true"><use href="#icon-route"></use></svg>
+              </span>
+              <span><strong>4 stages</strong><small>Complete lifecycle</small></span>
+            </div>
+            <div class="floating-card visual-card-two">
+              <span class="floating-icon purple">
+                <svg class="icon" aria-hidden="true"><use href="#icon-record"></use></svg>
+              </span>
+              <span><strong>1 record</strong><small>Centralized data</small></span>
+            </div>
+            <div class="floating-status">
+              <span class="pulse-dot"></span>
+              Vehicle record connected
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <a class="scroll-cue" href="#problem" aria-label="Scroll to problem statement">
+        <span>Scroll to explore</span>
+        <svg class="icon" aria-hidden="true"><use href="#icon-arrow-down"></use></svg>
+      </a>
+    </section>
+
+    <section class="section problem-section" id="problem" data-section="Problem">
+      <div class="container">
+        <div class="section-heading reveal">
+          <div class="section-number">01</div>
+          <div>
+            <p class="section-kicker">The Challenge</p>
+            <h2>Problem Statement</h2>
+            <p class="section-lead">
+              Car owners and car traders struggle to manage vehicles through their full lifecycle.
+            </p>
+          </div>
+        </div>
+
+        <div class="problem-grid">
+          <article class="problem-card reveal" style="--reveal-delay: 0ms">
+            <div class="card-icon blue"><svg class="icon"><use href="#icon-location"></use></svg></div>
+            <h3>No centralized vehicle tracking</h3>
+            <p>Vehicle information is often spread across different tools, notes, and systems.</p>
+            <span class="card-index">01</span>
+          </article>
+          <article class="problem-card reveal" style="--reveal-delay: 70ms">
+            <div class="card-icon purple"><svg class="icon"><use href="#icon-tools"></use></svg></div>
+            <h3>Scattered maintenance records</h3>
+            <p>Service history becomes difficult to follow, verify, and present when needed.</p>
+            <span class="card-index">02</span>
+          </article>
+          <article class="problem-card reveal" style="--reveal-delay: 140ms">
+            <div class="card-icon sky"><svg class="icon"><use href="#icon-wallet"></use></svg></div>
+            <h3>Poor expense visibility</h3>
+            <p>Owners cannot easily understand total cost or make informed financial decisions.</p>
+            <span class="card-index">03</span>
+          </article>
+          <article class="problem-card reveal" style="--reveal-delay: 210ms">
+            <div class="card-icon lavender"><svg class="icon"><use href="#icon-tag"></use></svg></div>
+            <h3>Difficult resale preparation</h3>
+            <p>Incomplete records and missing images slow the selling process and reduce confidence.</p>
+            <span class="card-index">04</span>
+          </article>
+          <article class="problem-card reveal" style="--reveal-delay: 280ms">
+            <div class="card-icon gray"><svg class="icon"><use href="#icon-process"></use></svg></div>
+            <h3>Manual management processes</h3>
+            <p>Repeated manual work creates delays, errors, and dependency on technical support.</p>
+            <span class="card-index">05</span>
+          </article>
+        </div>
+
+        <div class="solution-statement reveal">
+          <div class="solution-symbol">
+            <svg class="icon"><use href="#icon-link"></use></svg>
+          </div>
+          <div>
+            <span>The FlipFix approach</span>
+            <strong>FlipFix solves this by creating one connected vehicle lifecycle.</strong>
+          </div>
+          <svg class="statement-arrow icon" aria-hidden="true"><use href="#icon-arrow-right"></use></svg>
+        </div>
+      </div>
+    </section>
+
+    <section class="section lifecycle-section" id="lifecycle" data-section="Lifecycle">
+      <div class="container">
+        <div class="section-heading centered reveal">
+          <div class="section-number">02</div>
+          <div>
+            <p class="section-kicker">Core Workflow</p>
+            <h2>Car Life Cycle</h2>
+            <p class="section-lead">
+              Every vehicle moves through four clear stages, creating a reliable record from entry to sale.
+            </p>
+          </div>
+        </div>
+
+        <div class="lifecycle-shell reveal">
+          <div class="timeline" role="tablist" aria-label="Vehicle lifecycle stages">
+            <button class="stage-card active" type="button" role="tab" aria-selected="true" data-stage="0">
+              <span class="stage-node"><svg class="icon"><use href="#icon-edit"></use></svg></span>
+              <span class="stage-number">Stage 1</span>
+              <strong>Draft</strong>
+              <small>Vehicle is newly added and information may still be incomplete.</small>
+            </button>
+            <button class="stage-card" type="button" role="tab" aria-selected="false" data-stage="1">
+              <span class="stage-node"><svg class="icon"><use href="#icon-tools"></use></svg></span>
+              <span class="stage-number">Stage 2</span>
+              <strong>In Progress</strong>
+              <small>Vehicle preparation including maintenance, expenses, images, and updates.</small>
+            </button>
+            <button class="stage-card" type="button" role="tab" aria-selected="false" data-stage="2">
+              <span class="stage-node"><svg class="icon"><use href="#icon-ready"></use></svg></span>
+              <span class="stage-number">Stage 3</span>
+              <strong>Ready To Sell</strong>
+              <small>Vehicle becomes fully prepared and ready for selling.</small>
+            </button>
+            <button class="stage-card" type="button" role="tab" aria-selected="false" data-stage="3">
+              <span class="stage-node"><svg class="icon"><use href="#icon-check"></use></svg></span>
+              <span class="stage-number">Stage 4</span>
+              <strong>Sold</strong>
+              <small>Sale is completed and profit information is recorded.</small>
+            </button>
+          </div>
+
+          <div class="stage-detail" id="stageDetail" role="tabpanel" aria-live="polite">
+            <div class="stage-detail-main">
+              <span class="detail-label" id="detailLabel">STAGE 01 / RECORD CREATED</span>
+              <h3 id="detailTitle">Draft</h3>
+              <p id="detailDescription">Vehicle is newly added and information may still be incomplete.</p>
+              <div class="detail-points" id="detailPoints">
+                <span><svg class="icon"><use href="#icon-check-small"></use></svg>Core vehicle identity is created</span>
+                <span><svg class="icon"><use href="#icon-check-small"></use></svg>Record remains open for editing</span>
+              </div>
+            </div>
+            <div class="stage-meter" aria-hidden="true">
+              <div class="meter-top">
+                <span>Lifecycle progress</span>
+                <strong id="meterPercent">25%</strong>
+              </div>
+              <div class="meter-track"><span id="meterFill" style="width: 25%"></span></div>
+              <div class="meter-car" id="meterCar" style="left: 25%">
+                <svg class="icon"><use href="#icon-car"></use></svg>
+              </div>
+              <div class="meter-labels"><span>Purchase</span><span>Resale</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section mobile-section" id="mobile" data-section="Mobile">
+      <div class="container">
+        <div class="section-heading reveal">
+          <div class="section-number">03</div>
+          <div>
+            <p class="section-kicker">User Experience</p>
+            <h2>Mobile Application</h2>
+            <p class="section-lead">
+              A focused mobile experience for managing vehicle records wherever the work happens.
+            </p>
+          </div>
+        </div>
+
+        <div class="mobile-layout">
+          <div class="phone-mockup reveal" aria-label="FlipFix mobile app preview">
+            <div class="phone-frame">
+              <div class="phone-top"><span></span></div>
+              <div class="phone-screen">
+                <div class="mobile-app-header">
+                  <span class="mini-logo">FF</span>
+                  <div><small>Good morning</small><strong>My Garage</strong></div>
+                  <span class="avatar">K</span>
+                </div>
+                <div class="garage-summary">
+                  <small>Total vehicle value</small>
+                  <strong>$42,600</strong>
+                  <span>3 active vehicles</span>
+                </div>
+                <div class="mobile-filter"><span class="active">All</span><span>Ready</span><span>Sold</span></div>
+                <article class="vehicle-list-card">
+                  <div class="vehicle-thumb"><svg class="icon"><use href="#icon-car"></use></svg></div>
+                  <div><strong>Toyota Camry</strong><small>2020 • In Progress</small></div>
+                  <span class="status-pill">68%</span>
+                </article>
+                <article class="vehicle-list-card">
+                  <div class="vehicle-thumb purple"><svg class="icon"><use href="#icon-car"></use></svg></div>
+                  <div><strong>Honda Civic</strong><small>2019 • Ready To Sell</small></div>
+                  <span class="status-pill purple">92%</span>
+                </article>
+                <div class="mobile-bottom-nav">
+                  <svg class="icon active"><use href="#icon-home"></use></svg>
+                  <svg class="icon"><use href="#icon-car"></use></svg>
+                  <span class="add-button">+</span>
+                  <svg class="icon"><use href="#icon-chart"></use></svg>
+                  <svg class="icon"><use href="#icon-user"></use></svg>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="feature-columns">
+            <article class="feature-column current reveal" style="--reveal-delay: 0ms">
+              <header>
+                <span class="column-icon"><svg class="icon"><use href="#icon-mobile"></use></svg></span>
+                <div><small>Available now</small><h3>Current Features</h3></div>
+              </header>
+              <ul class="feature-list">
+                <li><svg class="icon"><use href="#icon-check-small"></use></svg>Add cars</li>
+                <li><svg class="icon"><use href="#icon-check-small"></use></svg>Manage vehicle data</li>
+                <li><svg class="icon"><use href="#icon-check-small"></use></svg>Expense tracking</li>
+                <li><svg class="icon"><use href="#icon-check-small"></use></svg>Maintenance tracking</li>
+                <li><svg class="icon"><use href="#icon-check-small"></use></svg>Image upload</li>
+                <li><svg class="icon"><use href="#icon-check-small"></use></svg>Sales preparation</li>
+              </ul>
+            </article>
+
+            <article class="feature-column limitations reveal" style="--reveal-delay: 80ms">
+              <header>
+                <span class="column-icon"><svg class="icon"><use href="#icon-alert"></use></svg></span>
+                <div><small>Current scope</small><h3>Current Limitations</h3></div>
+              </header>
+              <ul class="feature-list">
+                <li><svg class="icon"><use href="#icon-minus"></use></svg>No internal marketplace</li>
+                <li><svg class="icon"><use href="#icon-minus"></use></svg>No online payment</li>
+                <li><svg class="icon"><use href="#icon-minus"></use></svg>No buyer chat</li>
+                <li><svg class="icon"><use href="#icon-minus"></use></svg>Depends on accurate user input</li>
+              </ul>
+            </article>
+
+            <article class="feature-column future reveal" style="--reveal-delay: 160ms">
+              <header>
+                <span class="column-icon"><svg class="icon"><use href="#icon-spark"></use></svg></span>
+                <div><small>Product roadmap</small><h3>Future Plans</h3></div>
+              </header>
+              <ul class="feature-list">
+                <li><svg class="icon"><use href="#icon-arrow-small"></use></svg>Marketplace inside app</li>
+                <li><svg class="icon"><use href="#icon-arrow-small"></use></svg>Buyer/seller chat</li>
+                <li><svg class="icon"><use href="#icon-arrow-small"></use></svg>Online payment</li>
+                <li><svg class="icon"><use href="#icon-arrow-small"></use></svg>AI pricing suggestions</li>
+                <li><svg class="icon"><use href="#icon-arrow-small"></use></svg>Maintenance reminders</li>
+                <li><svg class="icon"><use href="#icon-arrow-small"></use></svg>Garage integrations</li>
+              </ul>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section admin-section" id="admin" data-section="Admin">
+      <div class="container">
+        <div class="admin-grid">
+          <div class="admin-copy reveal">
+            <div class="section-heading compact">
+              <div class="section-number">04</div>
+              <div>
+                <p class="section-kicker">System Control</p>
+                <h2>Web Admin Dashboard</h2>
+              </div>
+            </div>
+            <p class="admin-intro">
+              The dashboard allows administrators to manage and organize the system without needing a developer for every simple change.
+            </p>
+            <div class="admin-features">
+              <span><svg class="icon"><use href="#icon-dashboard"></use></svg>Dashboard monitoring</span>
+              <span><svg class="icon"><use href="#icon-users"></use></svg>User management</span>
+              <span><svg class="icon"><use href="#icon-report"></use></svg>Reports</span>
+              <span><svg class="icon"><use href="#icon-tag"></use></svg>Sales tracking</span>
+              <span><svg class="icon"><use href="#icon-wallet"></use></svg>Expense monitoring</span>
+              <span><svg class="icon"><use href="#icon-car"></use></svg>Vehicle control</span>
+              <span><svg class="icon"><use href="#icon-settings"></use></svg>System management</span>
+            </div>
+          </div>
+
+          <div class="dashboard-window reveal" aria-label="Web admin dashboard preview">
+            <div class="browser-bar">
+              <span class="browser-dots"><i></i><i></i><i></i></span>
+              <span class="browser-address">admin.flipfix.local/dashboard</span>
+              <span class="browser-user">KA</span>
+            </div>
+            <div class="dashboard-body">
+              <aside class="dashboard-sidebar">
+                <div class="dash-brand"><span>FF</span><strong>FlipFix</strong></div>
+                <div class="sidebar-item active"><svg class="icon"><use href="#icon-dashboard"></use></svg><span>Overview</span></div>
+                <div class="sidebar-item"><svg class="icon"><use href="#icon-users"></use></svg><span>Users</span></div>
+                <div class="sidebar-item"><svg class="icon"><use href="#icon-car"></use></svg><span>Vehicles</span></div>
+                <div class="sidebar-item"><svg class="icon"><use href="#icon-report"></use></svg><span>Reports</span></div>
+                <div class="sidebar-item"><svg class="icon"><use href="#icon-settings"></use></svg><span>Settings</span></div>
+              </aside>
+              <div class="dashboard-content">
+                <div class="dash-heading"><div><small>Administration</small><strong>System Overview</strong></div><button type="button">Export Report</button></div>
+                <div class="metric-grid">
+                  <div class="metric-card"><span>Active Cars</span><strong>248</strong><small>+12 this month</small></div>
+                  <div class="metric-card purple"><span>Total Users</span><strong>164</strong><small>+8.4% growth</small></div>
+                  <div class="metric-card sky"><span>Sales</span><strong>73</strong><small>21 this quarter</small></div>
+                </div>
+                <div class="dashboard-lower">
+                  <div class="chart-card">
+                    <div class="mock-title"><strong>Vehicle Activity</strong><span>Last 6 months</span></div>
+                    <div class="bar-chart" aria-hidden="true">
+                      <i style="--height: 32%"></i><i style="--height: 48%"></i><i style="--height: 42%"></i>
+                      <i style="--height: 67%"></i><i style="--height: 58%"></i><i style="--height: 84%"></i>
+                    </div>
+                  </div>
+                  <div class="activity-card">
+                    <div class="mock-title"><strong>Recent Updates</strong><span>Live</span></div>
+                    <div class="activity-row"><i class="blue"></i><span><strong>Vehicle approved</strong><small>Toyota Camry</small></span></div>
+                    <div class="activity-row"><i class="purple"></i><span><strong>Report generated</strong><small>Monthly sales</small></span></div>
+                    <div class="activity-row"><i class="sky"></i><span><strong>New user added</strong><small>2 minutes ago</small></span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <blockquote class="admin-quote reveal">
+          <svg class="quote-mark" aria-hidden="true"><use href="#icon-quote"></use></svg>
+          <p>“The web dashboard allows admins to organize and manage system data without needing a developer for every simple change.”</p>
+        </blockquote>
+      </div>
+    </section>
+
+    <section class="section benefits-section" id="benefits" data-section="Benefits">
+      <div class="container">
+        <div class="section-heading centered reveal">
+          <div class="section-number">05</div>
+          <div>
+            <p class="section-kicker">Project Value</p>
+            <h2>Why FlipFix?</h2>
+            <p class="section-lead">A connected system turns fragmented vehicle work into a clear, manageable process.</p>
+          </div>
+        </div>
+
+        <div class="benefits-grid">
+          <article class="benefit-card reveal" style="--reveal-delay: 0ms">
+            <span class="benefit-icon"><svg class="icon"><use href="#icon-route"></use></svg></span>
+            <div class="benefit-number">01</div>
+            <h3>Organized Vehicle Lifecycle</h3>
+            <p>Every vehicle follows a consistent process from draft to completed sale.</p>
+          </article>
+          <article class="benefit-card reveal" style="--reveal-delay: 60ms">
+            <span class="benefit-icon"><svg class="icon"><use href="#icon-brain"></use></svg></span>
+            <div class="benefit-number">02</div>
+            <h3>Better Decisions</h3>
+            <p>Expenses, maintenance, and sale data provide a clearer basis for action.</p>
+          </article>
+          <article class="benefit-card reveal" style="--reveal-delay: 120ms">
+            <span class="benefit-icon"><svg class="icon"><use href="#icon-bolt"></use></svg></span>
+            <div class="benefit-number">03</div>
+            <h3>Faster Management</h3>
+            <p>Structured workflows reduce repeated tasks and unnecessary manual effort.</p>
+          </article>
+          <article class="benefit-card reveal" style="--reveal-delay: 180ms">
+            <span class="benefit-icon"><svg class="icon"><use href="#icon-record"></use></svg></span>
+            <div class="benefit-number">04</div>
+            <h3>Centralized Records</h3>
+            <p>Vehicle details remain connected and available across mobile and admin tools.</p>
+          </article>
+          <article class="benefit-card reveal" style="--reveal-delay: 240ms">
+            <span class="benefit-icon"><svg class="icon"><use href="#icon-tag"></use></svg></span>
+            <div class="benefit-number">05</div>
+            <h3>Easier Selling Process</h3>
+            <p>A prepared record improves confidence and makes resale information easier to present.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section conclusion-section" id="conclusion" data-section="Conclusion">
+      <div class="conclusion-pattern" aria-hidden="true"></div>
+      <div class="container">
+        <div class="section-heading centered reveal">
+          <div class="section-number">06</div>
+          <div>
+            <p class="section-kicker">Final Perspective</p>
+            <h2>Conclusion</h2>
+            <p class="section-lead">FlipFix connects the current problem to a practical solution and a clear path for growth.</p>
+          </div>
+        </div>
+
+        <div class="conclusion-flow reveal" aria-label="Project conclusion flow">
+          <div class="conclusion-step">
+            <span>01</span>
+            <svg class="icon"><use href="#icon-alert"></use></svg>
+            <strong>Problem</strong>
+            <small>Fragmented vehicle management</small>
+          </div>
+          <svg class="flow-arrow icon" aria-hidden="true"><use href="#icon-arrow-right"></use></svg>
+          <div class="conclusion-step">
+            <span>02</span>
+            <svg class="icon"><use href="#icon-link"></use></svg>
+            <strong>Solution</strong>
+            <small>One connected digital record</small>
+          </div>
+          <svg class="flow-arrow icon" aria-hidden="true"><use href="#icon-arrow-right"></use></svg>
+          <div class="conclusion-step">
+            <span>03</span>
+            <svg class="icon"><use href="#icon-route"></use></svg>
+            <strong>Lifecycle</strong>
+            <small>Four structured stages</small>
+          </div>
+          <svg class="flow-arrow icon" aria-hidden="true"><use href="#icon-arrow-right"></use></svg>
+          <div class="conclusion-step">
+            <span>04</span>
+            <svg class="icon"><use href="#icon-spark"></use></svg>
+            <strong>Future Growth</strong>
+            <small>Marketplace, AI, and integrations</small>
+          </div>
+        </div>
+
+        <div class="final-message reveal">
+          <div class="final-mark">FF</div>
+          <p>FlipFix transforms vehicle lifecycle management into a centralized digital experience.</p>
+          <div class="discussion-label">
+            <span>Thank You</span>
+            <strong>Questions &amp; Discussion</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <div class="brand footer-brand">
+        <span class="brand-mark" aria-hidden="true">FF</span>
+        <span class="brand-copy"><strong>FlipFix</strong><small>University Project</small></span>
+      </div>
+      <p>Smart Vehicle Lifecycle Management System</p>
+      <a href="#home">Back to top <svg class="icon"><use href="#icon-arrow-up"></use></svg></a>
+    </div>
+  </footer>
+
+  <svg class="svg-sprite" aria-hidden="true" width="0" height="0">
+    <symbol id="icon-arrow-down" viewBox="0 0 24 24"><path d="M12 5v14M6 13l6 6 6-6"/></symbol>
+    <symbol id="icon-arrow-up" viewBox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"/></symbol>
+    <symbol id="icon-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="icon-arrow-small" viewBox="0 0 24 24"><path d="M7 12h10M13 8l4 4-4 4"/></symbol>
+    <symbol id="icon-present" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="13" rx="2"/><path d="M8 21l4-4 4 4M8 9l3 3 5-5"/></symbol>
+    <symbol id="icon-route" viewBox="0 0 24 24"><circle cx="6" cy="18" r="2"/><circle cx="18" cy="6" r="2"/><path d="M8 18h3a3 3 0 0 0 3-3v-6a3 3 0 0 1 3-3"/></symbol>
+    <symbol id="icon-record" viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></symbol>
+    <symbol id="icon-location" viewBox="0 0 24 24"><path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0z"/><circle cx="12" cy="10" r="2.5"/></symbol>
+    <symbol id="icon-tools" viewBox="0 0 24 24"><path d="M14.7 6.3a4 4 0 0 0-5-5L12 3.6 8.4 7.2 6.1 4.9a4 4 0 0 0 5 5L18.2 17a2 2 0 1 0 2.8-2.8l-6.3-6.3z"/><path d="M5 19l4-4"/></symbol>
+    <symbol id="icon-wallet" viewBox="0 0 24 24"><path d="M4 6h15a2 2 0 0 1 2 2v11H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h12"/><path d="M15 11h6v4h-6a2 2 0 0 1 0-4z"/></symbol>
+    <symbol id="icon-tag" viewBox="0 0 24 24"><path d="M20 13l-7 7L3 10V3h7l10 10z"/><circle cx="7.5" cy="7.5" r="1.5"/></symbol>
+    <symbol id="icon-process" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><path d="M10 6.5h5a3 3 0 0 1 3 3V14M14 17.5H9a3 3 0 0 1-3-3V10"/></symbol>
+    <symbol id="icon-link" viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.5.5l2-2a5 5 0 0 0-7-7l-1.2 1.2M14 11a5 5 0 0 0-7.5-.5l-2 2a5 5 0 0 0 7 7l1.2-1.2"/></symbol>
+    <symbol id="icon-edit" viewBox="0 0 24 24"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4L16.5 3.5z"/></symbol>
+    <symbol id="icon-ready" viewBox="0 0 24 24"><path d="M3 13h18M5 13l2-6h10l2 6M6 17h.01M18 17h.01"/><path d="M5 13v5h14v-5"/></symbol>
+    <symbol id="icon-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></symbol>
+    <symbol id="icon-check-small" viewBox="0 0 24 24"><path d="M5 12l4 4L19 6"/></symbol>
+    <symbol id="icon-car" viewBox="0 0 24 24"><path d="M3 14l2-5h14l2 5v5h-2v-2H5v2H3v-5z"/><path d="M7 14h.01M17 14h.01M7 9l2-4h6l2 4"/></symbol>
+    <symbol id="icon-mobile" viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M10 18h4"/></symbol>
+    <symbol id="icon-alert" viewBox="0 0 24 24"><path d="M12 3L2 21h20L12 3z"/><path d="M12 9v5M12 18h.01"/></symbol>
+    <symbol id="icon-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+    <symbol id="icon-spark" viewBox="0 0 24 24"><path d="M12 2l1.5 5.5L19 9l-5.5 1.5L12 16l-1.5-5.5L5 9l5.5-1.5L12 2zM19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8L19 16z"/></symbol>
+    <symbol id="icon-home" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v10h-6v-6H9v6H3V11z"/></symbol>
+    <symbol id="icon-chart" viewBox="0 0 24 24"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></symbol>
+    <symbol id="icon-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+    <symbol id="icon-dashboard" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol>
+    <symbol id="icon-users" viewBox="0 0 24 24"><circle cx="9" cy="8" r="4"/><path d="M2 21a7 7 0 0 1 14 0M17 4a4 4 0 0 1 0 8M17 14a7 7 0 0 1 5 7"/></symbol>
+    <symbol id="icon-report" viewBox="0 0 24 24"><path d="M6 2h9l4 4v16H6V2z"/><path d="M14 2v5h5M9 13h6M9 17h6M9 9h2"/></symbol>
+    <symbol id="icon-settings" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-2.8 2.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6v.2h-4V21a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1L4.2 17l.1-.1a1.7 1.7 0 0 0 .3-1.9A1.7 1.7 0 0 0 3 14H2.8v-4H3a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9L4.2 7 7 4.2l.1.1A1.7 1.7 0 0 0 9 4.6 1.7 1.7 0 0 0 10 3V2.8h4V3a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1L19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.2v4H21a1.7 1.7 0 0 0-1.6 1z"/></symbol>
+    <symbol id="icon-quote" viewBox="0 0 24 24"><path d="M9 11H4a6 6 0 0 1 6-6v3a3 3 0 0 0-3 3v1h2v7H3v-8M21 11h-5a6 6 0 0 1 6-6v3a3 3 0 0 0-3 3v1h2v7h-6v-8"/></symbol>
+    <symbol id="icon-brain" viewBox="0 0 24 24"><path d="M9.5 4A3.5 3.5 0 0 0 6 7.5c0 .4.1.8.2 1.2A4 4 0 0 0 4 12.3 4 4 0 0 0 8 16h1.5V4zM14.5 4A3.5 3.5 0 0 1 18 7.5c0 .4-.1.8-.2 1.2a4 4 0 0 1 2.2 3.6A4 4 0 0 1 16 16h-1.5V4zM9.5 9H7M14.5 9H17M9.5 14H7M14.5 14H17M9.5 16v4M14.5 16v4"/></symbol>
+    <symbol id="icon-bolt" viewBox="0 0 24 24"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/></symbol>
+  </svg>
+
+  <script src="script.js"></script>
+</body>
+</html>
